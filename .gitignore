@@ -35,3 +35,6 @@ __pycache__/
 
 # Uploaded files
 uploads/
+
+# Local database backups
+backups/
