@@ -7,9 +7,17 @@ class ComplaintLocation(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     address: str = Field(..., min_length=3)
-    latitude: float = Field(..., ge=-90, le=90)
-    longitude: float = Field(..., ge=-180, le=180)
+    latitude: Optional[float] = Field(None, ge=-90, le=90)
+    longitude: Optional[float] = Field(None, ge=-180, le=180)
 
+    @model_validator(mode="after")
+    def validate_coordinates(self):
+        if (self.latitude is None) != (self.longitude is None):
+            raise ValueError(
+                "Latitude and longitude must both be provided or both be null"
+            )
+        return self
+    
 class Complaint(BaseModel):
     model_config = ConfigDict(extra="forbid")
     title: str = Field(..., min_length=5, max_length=100)
