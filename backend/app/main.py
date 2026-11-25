@@ -1,10 +1,13 @@
 
+
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from app.database.mongodb import client
 
 from app.routes.complaint import router as complaints_router
+from app.routes.auth import router as auth_router
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -30,7 +33,10 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
+# Register API routers
 app.include_router(complaints_router)
+app.include_router(auth_router)
 
 
 @app.get("/")
