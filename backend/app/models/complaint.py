@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, Field, ConfigDict, model_validator
 from typing import Optional, Literal
 from datetime import datetime, timezone
